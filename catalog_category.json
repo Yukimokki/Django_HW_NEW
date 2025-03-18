@@ -1,0 +1,1 @@
+[{"model": "catalog.category", "pk": 1, "fields": {"name": "courses", "description": "variable programming courses for different levels"}}, {"model": "catalog.category", "pk": 2, "fields": {"name": "administration", "description": "remote access platform to manage your courses and workshops"}}]
