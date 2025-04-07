@@ -35,7 +35,7 @@ class Product(models.Model):
         null=True,
     )
     preview = models.ImageField(
-        upload_to="products/media",
+        upload_to="products/photo",
         blank=True,
         null=True,
         verbose_name="превью продукта",
