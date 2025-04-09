@@ -1,0 +1,26 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-2">
+        <div class="col">
+          <div class="card shadow-sm">
+
+            <div class="card-body">
+              <h2 class="card-text"> Product's name: {{ product.name }}</h2>
+              <img src="{{ product.preview|media_filter }}" >
+              <p class="card-text"> Product's description: {{ product.description}}</p>
+              <p class="card-text"> Product's price: {{ product.price}}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a class="btn btn-primary" href="{% url 'catalog:products_list' %}" role="button">Back</a>
+                   </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
