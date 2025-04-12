@@ -20,7 +20,8 @@ class Blog_Entry(models.Model):
     views_counter = models.PositiveIntegerField(
         verbose_name="visits counter",
         help_text="Number of views",
-        default=0
+        default=0,
+        editable=False
     )
     is_published = models.BooleanField(default=True, verbose_name="published")
 

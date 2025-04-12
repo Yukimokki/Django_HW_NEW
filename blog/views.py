@@ -20,20 +20,21 @@ class BlogDetailView(DetailView):
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
         self.object.views_counter += 1
-        self.object.save()
+        self.object.save(update_fields=['views_counter'])
         return self.object
 
 
 class BlogCreateView(CreateView):
     model = Blog_Entry
-    fields = ("title", "content", "preview", "creation_date", "is_published")
+    fields = ["title", "content", "preview", "creation_date", "is_published"]
     success_url = reverse_lazy('blog:blog_list')
 
-
+    def get_success_url(self):
+        return reverse('blog:blog_entry', args=[self.kwargs.get('pk')])
 
 class BlogUpdateView(UpdateView):
     model = Blog_Entry
-    fields = ("title", "content", "preview", "creation_date", "is_published")
+    fields = ["title", "content", "preview", "creation_date", "is_published"]
     success_url = reverse_lazy('blog:blog_list')
 
 
