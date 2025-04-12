@@ -67,3 +67,17 @@ class Product(models.Model):
         verbose_name="Дата последнего изменения",
         help_text="date when changed",
     )
+
+    views_counter = models.PositiveIntegerField(
+        verbose_name="visits counter",
+        help_text="Number of views",
+        default=0
+    )
+
+    is_published = models.BooleanField(default=False, verbose_name="published")
+
+
+    class Meta:
+        verbose_name = "Продукт"
+        verbose_name_plural = "Продукты"
+        ordering = ["name"]
