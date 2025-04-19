@@ -2,8 +2,10 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from catalog.forms import ProductForm
+from django.forms import inlineformset_factory
 
-from catalog.models import Product
+from catalog.models import Product, Category
 
 
 def home(request):
@@ -27,17 +29,32 @@ class ProductDetailView(DetailView):
 
 class ProductCreateView(CreateView):
     model = Product
-    fields = ['name', 'description', 'preview', 'category', 'price']
+    form_class = ProductForm
     success_url = reverse_lazy("catalog:product_list")
+
+    def form_valid(self, form):
+        product = form.save()
+        user = self.request.user
+        product.owner = user
+        product.save()
+        return super().form_valid(form)
 
 
 class ProductUpdateView(UpdateView):
     model = Product
-    fields = ['name', 'description', 'preview', 'category', 'price']
+    form_class = ProductForm
     success_url = reverse_lazy("catalog:product_list")
 
     def get_success_url(self):
         return reverse("catalog:product_detail", args=[self.kwargs.get("pk")])
+
+
+def form_valid(self, form):
+    product = form.save()
+    user = self.request.user
+    product.owner = user
+    product.save()
+    return super().form_valid(form)
 
 
 class ProductDeleteView(DeleteView):
