@@ -1,6 +1,14 @@
 from django.forms import ModelForm, BooleanField, ValidationError
 from .models import Product, Category
 from django.core.validators import MaxLengthValidator
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
+
+
+class MyView(LoginRequiredMixin, View):
+    login_url = "/login/"
+    redirect_field_name = "redirect_to"
+
 
 class StyleFormMixin:
     def __init__(self,*args, **kwargs):
