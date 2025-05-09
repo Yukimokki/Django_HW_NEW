@@ -1,4 +1,7 @@
 from django.db import models
+from users.models import CustomUser
+
+NULLABLE = {"blank": True, "null": True}
 
 class Category(models.Model):
     name = models.CharField(
@@ -76,8 +79,22 @@ class Product(models.Model):
 
     is_published = models.BooleanField(default=False, verbose_name="published")
 
+    owner = models.ForeignKey(
+        CustomUser,
+        verbose_name="Owner",
+        help_text="print Products's owner name",
+        on_delete=models.SET_NULL,
+        **NULLABLE)
+
 
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["name"]
+        permissions = [
+            ("can_change_category", "can change category"),
+            ("can_edit_description", "can edit description"),
+            ("can_edit_publication", "can change publication"),
+            ("can_unpublish_product", "can unpublish product"),
+            ("can_delete_product", "can delete product"),
+        ]
