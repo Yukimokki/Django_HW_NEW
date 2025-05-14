@@ -9,6 +9,7 @@ from catalog.forms import ProductForm, ProductModeratorForm
 from django.forms import inlineformset_factory
 
 from catalog.models import Product, Category
+from catalog.services import get_cached_products
 
 
 class MyView(LoginRequiredMixin, View):
@@ -23,6 +24,11 @@ class ProductListView(ListView):
     model = Product
     template_name = "catalog/product_list.html"
     context_object_name = "product_list"
+
+
+    def get_queryset(self):
+        return get_cached_products()
+
 
 
 class ProductDetailView(DetailView):
@@ -40,6 +46,8 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     form_class = ProductForm
     success_url = reverse_lazy("catalog:product_list")
 
+
+
     def form_valid(self, form):
         product = form.save()
         user = self.request.user
@@ -55,6 +63,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse("catalog:product_detail", args=[self.kwargs.get("pk")])
+
 
     def get_form_class(self):
         user = self.request.user
